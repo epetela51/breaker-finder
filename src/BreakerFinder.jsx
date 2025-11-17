@@ -126,12 +126,12 @@ const BreakerFinder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen p-4">
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-6 mb-4">
           <div className="flex items-center justify-center mb-6">
             <Home className="w-8 h-8 text-indigo-600 mr-3" />
-            <h1 className="text-2xl font-bold text-gray-800">Home Breaker Finder</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Find That Breaker</h1>
           </div>
 
           <button onClick={() => setShowQR(!showQR)} className="w-full mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
@@ -223,7 +223,7 @@ const BreakerFinder = () => {
           )}
 
           {(selectedRoom || selectedType || selectedItem) && (
-            <button onClick={resetSelections} className="w-full mt-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+            <button onClick={resetSelections} className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
               Reset
             </button>
           )}
@@ -231,7 +231,7 @@ const BreakerFinder = () => {
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
           <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
-          <p>Always turn off the main breaker before working on electrical systems. If unsure, consult a licensed electrician.</p>
+          <p>Always turn off the main breaker before working on electrical systems or face the consequences.</p>
         </div>
       </div>
     </div>
