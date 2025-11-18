@@ -11,11 +11,43 @@ const BreakerFinder = () => {
   const [selectedType, setSelectedType] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
 
+  const KNOWN_TYPES = ["outlets", "lights", "appliances"];
+
+  // Check if a floor has rooms or goes directly to types
+  const hasRooms = (floor) => {
+    if (!floor || !homeData[floor]) return false;
+    const floorData = homeData[floor];
+    const floorKeys = Object.keys(floorData);
+    // If any direct child is a known type, there are no rooms
+    return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
+  };
+
   const floors = Object.keys(homeData);
-  const rooms = selectedFloor ? Object.keys(homeData[selectedFloor]) : [];
-  const types = selectedFloor && selectedRoom ? Object.keys(homeData[selectedFloor][selectedRoom]) : [];
-  const items = selectedFloor && selectedRoom && selectedType ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType]) : [];
-  const breakerInfo = selectedFloor && selectedRoom && selectedType && selectedItem ? homeData[selectedFloor][selectedRoom][selectedType][selectedItem] : null;
+  const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
+  const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
+
+  // Types: if no rooms, get from floor directly; otherwise from room
+  const types = selectedFloor ? (floorHasRooms && selectedRoom ? Object.keys(homeData[selectedFloor][selectedRoom]) : floorHasRooms ? [] : Object.keys(homeData[selectedFloor])) : [];
+
+  // Items: handle both cases (with and without rooms)
+  const items =
+    selectedFloor && selectedType
+      ? floorHasRooms && selectedRoom
+        ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType])
+        : !floorHasRooms
+        ? Object.keys(homeData[selectedFloor][selectedType])
+        : []
+      : [];
+
+  // Breaker info: handle both cases
+  const breakerInfo =
+    selectedFloor && selectedType && selectedItem
+      ? floorHasRooms && selectedRoom
+        ? homeData[selectedFloor][selectedRoom][selectedType][selectedItem]
+        : !floorHasRooms
+        ? homeData[selectedFloor][selectedType][selectedItem]
+        : null
+      : null;
 
   const getTypeIcon = (type) => {
     switch (type) {
@@ -48,7 +80,7 @@ const BreakerFinder = () => {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Floor</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Select Area</label>
               <select
                 value={selectedFloor}
                 onChange={(e) => {
@@ -59,7 +91,7 @@ const BreakerFinder = () => {
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
-                <option value="">Choose a floor...</option>
+                <option value="">choose an area...</option>
                 {floors.map((floor) => (
                   <option key={floor} value={floor}>
                     {floor}
@@ -68,7 +100,7 @@ const BreakerFinder = () => {
               </select>
             </div>
 
-            {selectedFloor && (
+            {selectedFloor && floorHasRooms && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
                 <select
@@ -90,7 +122,7 @@ const BreakerFinder = () => {
               </div>
             )}
 
-            {selectedRoom && (
+            {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Type</label>
                 <select

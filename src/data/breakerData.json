@@ -121,6 +121,9 @@
       "lights": {
         "Outside next to front door (2)": "5",
         "Single light across from front door (in corner)": "5"
+      },
+      "appliances": {
+        "Doorbell": "40"
       }
     },
     "Bathroom/Laundry": {
@@ -203,7 +206,6 @@
     "appliances": {
       "AC - Outside compressor": "30 & 32",
       "AC - Air handler in attic": "34 & 36",
-      "Doorbell": "40",
       "Boiler (heat & domestic hot water)": "20"
     }
   },
