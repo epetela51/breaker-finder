@@ -1,6 +1,6 @@
 import "./App.css";
 
-import BreakerFinder from "./BreakerFinder";
+import BreakerFinder from "./BreakerFinder/BreakerFinder";
 
 function App() {
   return (

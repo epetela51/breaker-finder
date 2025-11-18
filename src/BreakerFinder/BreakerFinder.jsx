@@ -1,110 +1,53 @@
 import React, { useState } from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
-// QR Code component using QR Server API
-const QRCode = ({ url, size = 200 }) => {
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(url)}`;
-  return (
-    <div className="flex flex-col items-center">
-      <img
-        src={qrUrl}
-        alt="QR Code"
-        className="border-4 border-gray-200 rounded-lg"
-        onError={(e) => {
-          console.error("QR Code failed to load");
-          e.target.style.display = "none";
-        }}
-      />
-    </div>
-  );
-};
+// import homeData from "../data/placeholderData.json";
+
+import homeData from "../data/breakerData.json";
 
 const BreakerFinder = () => {
-  const [showQR, setShowQR] = useState(false);
+  const [selectedFloor, setSelectedFloor] = useState("");
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
 
-  // Sample data structure - customize this with your actual home layout
-  const homeData = {
-    "Living Room": {
-      outlets: {
-        "North Wall Outlet": "Breaker 5",
-        "South Wall Outlet": "Breaker 5",
-        "TV Outlet": "Breaker 12",
-      },
-      lights: {
-        "Ceiling Light": "Breaker 3",
-        "Floor Lamp Outlet": "Breaker 5",
-      },
-      appliances: {
-        TV: "Breaker 12",
-        "Entertainment Center": "Breaker 12",
-      },
-    },
-    Kitchen: {
-      outlets: {
-        "Counter Outlet 1": "Breaker 8",
-        "Counter Outlet 2": "Breaker 9",
-        "Island Outlet": "Breaker 10",
-      },
-      lights: {
-        "Ceiling Lights": "Breaker 4",
-        "Under Cabinet Lights": "Breaker 4",
-      },
-      appliances: {
-        Refrigerator: "Breaker 15",
-        Dishwasher: "Breaker 16",
-        Microwave: "Breaker 11",
-        "Garbage Disposal": "Breaker 17",
-      },
-    },
-    "Master Bedroom": {
-      outlets: {
-        "Left Nightstand": "Breaker 6",
-        "Right Nightstand": "Breaker 6",
-        "Dresser Outlet": "Breaker 6",
-      },
-      lights: {
-        "Ceiling Fan Light": "Breaker 2",
-        "Closet Light": "Breaker 2",
-      },
-      appliances: {
-        "Ceiling Fan": "Breaker 2",
-      },
-    },
-    Bathroom: {
-      outlets: {
-        "Vanity Outlet": "Breaker 7 (GFCI)",
-      },
-      lights: {
-        "Vanity Lights": "Breaker 1",
-        "Shower Light": "Breaker 1",
-      },
-      appliances: {
-        "Exhaust Fan": "Breaker 1",
-      },
-    },
-    Garage: {
-      outlets: {
-        "Workbench Outlet": "Breaker 13",
-        "Door Outlet": "Breaker 13",
-      },
-      lights: {
-        "Overhead Lights": "Breaker 14",
-      },
-      appliances: {
-        "Garage Door Opener": "Breaker 14",
-      },
-    },
+  const KNOWN_TYPES = ["outlets", "lights", "appliances"];
+
+  // Check if a floor has rooms or goes directly to types
+  const hasRooms = (floor) => {
+    if (!floor || !homeData[floor]) return false;
+    const floorData = homeData[floor];
+    const floorKeys = Object.keys(floorData);
+    // If any direct child is a known type, there are no rooms
+    return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
   };
 
-  const rooms = Object.keys(homeData);
-  const types = selectedRoom ? Object.keys(homeData[selectedRoom]) : [];
-  const items = selectedRoom && selectedType ? Object.keys(homeData[selectedRoom][selectedType]) : [];
-  const breakerInfo = selectedRoom && selectedType && selectedItem ? homeData[selectedRoom][selectedType][selectedItem] : null;
+  const floors = Object.keys(homeData);
+  const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
+  const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
 
-  const currentUrl = window.location.href;
+  // Types: if no rooms, get from floor directly; otherwise from room
+  const types = selectedFloor ? (floorHasRooms && selectedRoom ? Object.keys(homeData[selectedFloor][selectedRoom]) : floorHasRooms ? [] : Object.keys(homeData[selectedFloor])) : [];
+
+  // Items: handle both cases (with and without rooms)
+  const items =
+    selectedFloor && selectedType
+      ? floorHasRooms && selectedRoom
+        ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType])
+        : !floorHasRooms
+        ? Object.keys(homeData[selectedFloor][selectedType])
+        : []
+      : [];
+
+  // Breaker info: handle both cases
+  const breakerInfo =
+    selectedFloor && selectedType && selectedItem
+      ? floorHasRooms && selectedRoom
+        ? homeData[selectedFloor][selectedRoom][selectedType][selectedItem]
+        : !floorHasRooms
+        ? homeData[selectedFloor][selectedType][selectedItem]
+        : null
+      : null;
 
   const getTypeIcon = (type) => {
     switch (type) {
@@ -120,6 +63,7 @@ const BreakerFinder = () => {
   };
 
   const resetSelections = () => {
+    setSelectedFloor("");
     setSelectedRoom("");
     setSelectedType("");
     setSelectedItem("");
@@ -134,40 +78,51 @@ const BreakerFinder = () => {
             <h1 className="text-2xl font-bold text-gray-800">Find That Breaker</h1>
           </div>
 
-          <button onClick={() => setShowQR(!showQR)} className="w-full mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
-            {showQR ? "Hide QR Code" : "Show QR Code"}
-          </button>
-
-          {showQR && (
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600 text-center mb-3">Scan to access this tool</p>
-              <QRCode url={currentUrl} size={200} />
-              <p className="text-xs text-gray-500 text-center mt-3">Save or print this QR code for quick access</p>
-            </div>
-          )}
-
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Select Area</label>
               <select
-                value={selectedRoom}
+                value={selectedFloor}
                 onChange={(e) => {
-                  setSelectedRoom(e.target.value);
+                  setSelectedFloor(e.target.value);
+                  setSelectedRoom("");
                   setSelectedType("");
                   setSelectedItem("");
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
-                <option value="">Choose a room...</option>
-                {rooms.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
+                <option value="">choose an area...</option>
+                {floors.map((floor) => (
+                  <option key={floor} value={floor}>
+                    {floor}
                   </option>
                 ))}
               </select>
             </div>
 
-            {selectedRoom && (
+            {selectedFloor && floorHasRooms && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
+                <select
+                  value={selectedRoom}
+                  onChange={(e) => {
+                    setSelectedRoom(e.target.value);
+                    setSelectedType("");
+                    setSelectedItem("");
+                  }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                >
+                  <option value="">Choose a room...</option>
+                  {rooms.map((room) => (
+                    <option key={room} value={room}>
+                      {room}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Type</label>
                 <select
@@ -222,7 +177,7 @@ const BreakerFinder = () => {
             </div>
           )}
 
-          {(selectedRoom || selectedType || selectedItem) && (
+          {(selectedFloor || selectedRoom || selectedType || selectedItem) && (
             <button onClick={resetSelections} className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
               Reset
             </button>

@@ -1,0 +1,227 @@
+{
+  "Top Floor": {
+    "Master Bedroom": {
+      "outlets": {
+        "All outlets (2 next to bed, wall on front yard, wall on driveway)": "38",
+        "Closet outlet": "38"
+      },
+      "lights": {
+        "Ceiling light/fan": "38",
+        "Closet light": "38"
+      }
+    },
+    "Master Bathroom": {
+      "outlets": {
+        "Outlet next to sink": "38"
+      },
+      "lights": {
+        "Ceiling light/vent": "18",
+        "2 sconce lights above sink": "38"
+      }
+    },
+    "Landing Bathroom": {
+      "outlets": {
+        "Outlet to right of sink": "14 (bottom breaker switch)"
+      },
+      "lights": {
+        "Light above sink": "16"
+      }
+    },
+    "Maddies Room": {
+      "outlets": {
+        "All outlets": "16"
+      },
+      "lights": {
+        "Light/fan": "16"
+      }
+    },
+    "Livy's Room": {
+      "outlets": {
+        "All outlets": "16"
+      },
+      "lights": {
+        "Light/fan": "16"
+      }
+    },
+    "Landing": {
+      "lights": {
+        "Top of stairs pendant light": "38"
+      },
+      "appliances": {
+        "Thermostat": "34 & 36 (ties into handler in attic)"
+      }
+    }
+  },
+  "Main Floor": {
+    "Playroom": {
+      "outlets": {
+        "All outlets (front yard wall, driveway wall, right of fireplace)": "7"
+      },
+      "lights": {
+        "Ceiling Light": "5"
+      }
+    },
+    "Office": {
+      "outlets": {
+        "Right of door/next to closet (no windows on wall)": "10",
+        "Driveway & backyard walls & left of door (opposite wall of thermostat)": "12"
+      },
+      "lights": {
+        "Light": "10"
+      }
+    },
+    "Kitchen": {
+      "outlets": {
+        "Island across from oven & next to pendant light switch": "1 (bottom breaker switch)",
+        "Left of sink (google home)": "3 (top breaker switch)",
+        "Right of sink (carbon dioxide detector)": "3 (top breaker switch)",
+        "Left of refrigerator (air fryer)": "3 (top breaker switch)"
+      },
+      "lights": {
+        "Countertop island pendant lights": "1 (top breaker switch)",
+        "Under cabinets": "3 (top breaker switch)",
+        "4 recessed lights next to fridge/over sink": "5",
+        "3 recessed lights between nook and kitchen": "6",
+        "Over the sink": "5"
+      },
+      "appliances": {
+        "Refrigerator": "11",
+        "Microwave": "31",
+        "Oven": "35",
+        "Stove top & griddle": "1 (bottom) OR 23 & 25?",
+        "Garbage disposal": "3 (top breaker switch)"
+      }
+    },
+    "Nook": {
+      "outlets": {
+        "All 3 (left & right of fireplace & wall across from fireplace)": "6"
+      },
+      "lights": {
+        "2 recessed in front of fireplace": "5",
+        "Single pendant light": "12"
+      }
+    },
+    "Living Room": {
+      "outlets": {
+        "Above fireplace (TV)": "12",
+        "Left of fireplace/below big window": "12",
+        "Inside built in (left side inside cabinet - charging cable)": "12",
+        "Pantry/entry to bathroom above radiator": "12"
+      },
+      "lights": {
+        "Recessed lights": "12",
+        "Pantry/entry to bathroom light": "12",
+        "Outside patio light next to door": "12"
+      },
+      "appliances": {
+        "Thermostat (next to built in)": "20"
+      }
+    },
+    "Front Door/Entry": {
+      "lights": {
+        "Outside next to front door (2)": "5",
+        "Single light across from front door (in corner)": "5"
+      },
+      "appliances": {
+        "Doorbell": "40"
+      }
+    },
+    "Bathroom/Laundry": {
+      "outlets": {
+        "Right of toiler": "3 (bottom breaker switch)"
+      },
+      "lights": {
+        "Over laundry": "10"
+      },
+      "appliances": {
+        "Dryer": "22 & 24",
+        "Washing machine": "8"
+      }
+    },
+    "Dining Room": {
+      "outlets": {
+        "All 3 walls (backyard, front yard, opposite wall of coat closet)": "14 (top breaker switch)",
+        "Under thermostat": "7"
+      },
+      "lights": {
+        "Over table": "5"
+      },
+      "appliances": {
+        "Thermostat": "20"
+      }
+    }
+  },
+  "Basement": {
+    "Office/Workout Area": {
+      "outlets": {
+        "Between closets/under window (peloton)": "26",
+        "Back wall next to little closet (2 outlets - 3D printer & laptop/monitors)": "26",
+        "Top corner of wall off electrical panel closet (monoxide)": "28"
+      },
+      "lights": {
+        "Electrical panel closet": "21",
+        "Recessed lights": "27"
+      },
+      "appliances": {
+        "Thermostat": "20"
+      }
+    },
+    "Play Area": {
+      "outlets": {
+        "Inside cabinet (under TV)": "26",
+        "Wall next to yard with 2 windows (xmas tree & dehumidifier/well system)": "26",
+        "Back wall between well system and door to garage": "29"
+      },
+      "lights": {
+        "Recessed in front of front wall (TV)": "27",
+        "Back wall next to well system/across from mechanical room and middle of ceiling": "29",
+        "Bottom of stairs light": "21"
+      }
+    },
+    "Well Room": {
+      "lights": {
+        "Well system pull string light": "21"
+      },
+      "appliances": {
+        "Water pump toggle switch": "7",
+        "Radon/Uranium/softener/outlet": "37"
+      }
+    }
+  },
+  "Garage": {
+    "outlets": {
+      "Back wall (next to pegboard)": "13",
+      "Side wall with window (below ladder)": "13"
+    },
+    "lights": {
+      "Ceiling lights": "13",
+      "Stairs to main floor": "6",
+      "Outside next to door": "13"
+    },
+    "appliances": {
+      "Garage doors": "13"
+    }
+  },
+  "Mechanical": {
+    "appliances": {
+      "AC - Outside compressor": "30 & 32",
+      "AC - Air handler in attic": "34 & 36",
+      "Boiler (heat & domestic hot water)": "20"
+    }
+  },
+  "Unknowns": {
+    "outlets": {
+      "Outlet next to door going outside to patio": "Unknown",
+      "Outlet inside coat closet": "Unknown",
+      "Outlet to right of refrigerator (router & coffee)": "Unknown",
+      "Outlet in garage for sprinkler/fridge": "Unknown"
+    },
+    "lights": {
+      "Light inside mechanical room": "Unknown",
+      "Outside motion light off corner of living room": "Unknown"
+    },
+    "appliances": {
+      "Landing full bath vent fan": "Unknown"
+    }
+  }
+}
