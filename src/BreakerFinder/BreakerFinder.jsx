@@ -6,14 +6,16 @@ import { Home, Zap, Power, Lightbulb } from "lucide-react";
 import homeData from "../data/breakerData.json";
 
 const BreakerFinder = () => {
+  const [selectedFloor, setSelectedFloor] = useState("");
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
 
-  const rooms = Object.keys(homeData);
-  const types = selectedRoom ? Object.keys(homeData[selectedRoom]) : [];
-  const items = selectedRoom && selectedType ? Object.keys(homeData[selectedRoom][selectedType]) : [];
-  const breakerInfo = selectedRoom && selectedType && selectedItem ? homeData[selectedRoom][selectedType][selectedItem] : null;
+  const floors = Object.keys(homeData);
+  const rooms = selectedFloor ? Object.keys(homeData[selectedFloor]) : [];
+  const types = selectedFloor && selectedRoom ? Object.keys(homeData[selectedFloor][selectedRoom]) : [];
+  const items = selectedFloor && selectedRoom && selectedType ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType]) : [];
+  const breakerInfo = selectedFloor && selectedRoom && selectedType && selectedItem ? homeData[selectedFloor][selectedRoom][selectedType][selectedItem] : null;
 
   const getTypeIcon = (type) => {
     switch (type) {
@@ -29,6 +31,7 @@ const BreakerFinder = () => {
   };
 
   const resetSelections = () => {
+    setSelectedFloor("");
     setSelectedRoom("");
     setSelectedType("");
     setSelectedItem("");
@@ -45,24 +48,47 @@ const BreakerFinder = () => {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Select Floor</label>
               <select
-                value={selectedRoom}
+                value={selectedFloor}
                 onChange={(e) => {
-                  setSelectedRoom(e.target.value);
+                  setSelectedFloor(e.target.value);
+                  setSelectedRoom("");
                   setSelectedType("");
                   setSelectedItem("");
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
-                <option value="">Choose a room...</option>
-                {rooms.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
+                <option value="">Choose a floor...</option>
+                {floors.map((floor) => (
+                  <option key={floor} value={floor}>
+                    {floor}
                   </option>
                 ))}
               </select>
             </div>
+
+            {selectedFloor && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
+                <select
+                  value={selectedRoom}
+                  onChange={(e) => {
+                    setSelectedRoom(e.target.value);
+                    setSelectedType("");
+                    setSelectedItem("");
+                  }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                >
+                  <option value="">Choose a room...</option>
+                  {rooms.map((room) => (
+                    <option key={room} value={room}>
+                      {room}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {selectedRoom && (
               <div>
@@ -119,7 +145,7 @@ const BreakerFinder = () => {
             </div>
           )}
 
-          {(selectedRoom || selectedType || selectedItem) && (
+          {(selectedFloor || selectedRoom || selectedType || selectedItem) && (
             <button onClick={resetSelections} className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
               Reset
             </button>
