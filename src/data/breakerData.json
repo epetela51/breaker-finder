@@ -1,0 +1,241 @@
+{
+  "Master Bedroom": {
+    "outlets": {
+      "All outlets (2 on accent wall/bed, wall on front yard, wall on driveway)": "Breaker 38",
+      "Closet outlet": "Breaker 38"
+    },
+    "lights": {
+      "Ceiling light/fan": "Breaker 38",
+      "Closet light": "Breaker 38"
+    },
+    "appliances": {}
+  },
+  "Master Bedroom - Bathroom": {
+    "outlets": {
+      "Outlet above sink": "Breaker 38"
+    },
+    "lights": {
+      "Ceiling light/vent": "Breaker 18",
+      "2 sconce lights above sink": "Breaker 38"
+    },
+    "appliances": {}
+  },
+  "Maddies Room": {
+    "outlets": {
+      "All outlets": "Breaker 16"
+    },
+    "lights": {
+      "Light/fan": "Breaker 16"
+    },
+    "appliances": {}
+  },
+  "Livy's Room": {
+    "outlets": {
+      "All outlets": "Breaker 16"
+    },
+    "lights": {
+      "Light/fan": "Breaker 16"
+    },
+    "appliances": {}
+  },
+  "Top Floor Bathroom": {
+    "outlets": {
+      "Outlet above countertop in corner": "Breaker 14 (bottom breaker switch)"
+    },
+    "lights": {
+      "Light": "Breaker 16"
+    },
+    "appliances": {}
+  },
+  "Top Floor Hallway": {
+    "outlets": {},
+    "lights": {
+      "Top of stairs pendant light": "Breaker 38"
+    },
+    "appliances": {
+      "Thermostat": "Breaker 34 & 36 (ties into handler in attic)"
+    }
+  },
+  "Front Door/Entry": {
+    "outlets": {},
+    "lights": {
+      "Outside next to door (2)": "Breaker 5",
+      "Single across from front door in corner": "Breaker 5"
+    },
+    "appliances": {}
+  },
+  "Kitchen": {
+    "outlets": {
+      "Island across from oven/next to pendant light switch": "Breaker 1 (bottom breaker switch)",
+      "Left of sink (google)": "Breaker 3 (top breaker switch)",
+      "Right of sink (carbon dioxide)": "Breaker 3 (top breaker switch)",
+      "Left of refrigerator (air fryer)": "Breaker 3 (top breaker switch)"
+    },
+    "lights": {
+      "Countertop island pendant lights": "Breaker 1 (top breaker switch)",
+      "Under cabinet": "Breaker 3 (top breaker switch)",
+      "4 recessed lights next to fridge/over sink": "Breaker 5",
+      "3 recessed lights between nook and kitchen": "Breaker 6",
+      "Over the sink light": "Breaker 5"
+    },
+    "appliances": {
+      "Refrigerator": "Breaker 11",
+      "Microwave": "Breaker 31",
+      "Oven": "Breaker 35",
+      "Stove top & griddle": "Breaker 1 (bottom) OR 23 & 25",
+      "Garbage disposal": "Breaker 3 (top breaker switch)"
+    }
+  },
+  "Dining Room": {
+    "outlets": {
+      "All 3 walls (backyard, front yard, outside of coat closet)": "Breaker 14 (top breaker switch)",
+      "Under thermostat": "Breaker 7"
+    },
+    "lights": {
+      "Over table": "Breaker 5"
+    },
+    "appliances": {
+      "Thermostat": "Breaker 20"
+    }
+  },
+  "Playroom": {
+    "outlets": {
+      "All outlets (3 - dual windows wall, single window wall, right of fireplace)": "Breaker 7"
+    },
+    "lights": {
+      "Light": "Breaker 5"
+    },
+    "appliances": {}
+  },
+  "Nook": {
+    "outlets": {
+      "All 3 (left & right fireplace & wall across from fireplace)": "Breaker 6"
+    },
+    "lights": {
+      "2 recessed in front of fireplace": "Breaker 5",
+      "Single pendant light": "Breaker 12"
+    },
+    "appliances": {}
+  },
+  "Main Floor Bathroom/Laundry": {
+    "outlets": {
+      "Next to toilet on floor": "Breaker 3 (bottom breaker switch)"
+    },
+    "lights": {
+      "Over laundry": "Breaker 10"
+    },
+    "appliances": {
+      "Dryer": "Breaker 22 & 24",
+      "Washing machine": "Breaker 8"
+    }
+  },
+  "Living Room": {
+    "outlets": {
+      "Above fireplace (TV)": "Breaker 12",
+      "Left of fireplace/below big window": "Breaker 12",
+      "Inside built in on left side inside cabinet (charging cable)": "Breaker 12",
+      "Pantry/entry to bathroom above radiator": "Breaker 12"
+    },
+    "lights": {
+      "Recessed lights": "Breaker 12",
+      "Pantry/entry to bathroom light": "Breaker 12"
+    },
+    "appliances": {
+      "Thermostat (next to built in)": "Breaker 20"
+    }
+  },
+  "Office": {
+    "outlets": {
+      "Wall across from window/next to doorway": "Breaker 10",
+      "Walls with windows (driveway & backyard) & opposite thermostat (router)": "Breaker 12"
+    },
+    "lights": {
+      "Light": "Breaker 10"
+    },
+    "appliances": {}
+  },
+  "Basement - Office/Workout Area": {
+    "outlets": {
+      "Between closets/under window (peloton)": "Breaker 26",
+      "Back wall next to little closet (2 outlets) (3d printer & laptop/monitors)": "Breaker 26",
+      "Top corner of wall off electrical panel closet (monoxide)": "Breaker 28"
+    },
+    "lights": {
+      "Electrical panel closet": "Breaker 21",
+      "Recessed lights": "Breaker 27"
+    },
+    "appliances": {}
+  },
+  "Basement - Play Area": {
+    "outlets": {
+      "Inside cabinet (under TV)": "Breaker 26",
+      "Side wall with 2 windows next to yard (xmas tree & dehumidifier/well system)": "Breaker 26",
+      "Back wall between well system and door to garage": "Breaker 29"
+    },
+    "lights": {
+      "Recessed in front of front wall (TV)": "Breaker 27",
+      "Back wall next to well system/across from mechanical room": "Breaker 29"
+    },
+    "appliances": {}
+  },
+  "Basement - Well Room": {
+    "outlets": {},
+    "lights": {
+      "Well system pull string light": "Breaker 21"
+    },
+    "appliances": {
+      "Water pump switch": "Breaker 7",
+      "Radon/Uranium/softener/outlet": "Breaker 37"
+    }
+  },
+  "Basement Hallway": {
+    "outlets": {},
+    "lights": {
+      "Bottom of the stairs light": "Breaker 21"
+    },
+    "appliances": {
+      "Thermostat": "Breaker 20"
+    }
+  },
+  "Garage": {
+    "outlets": {
+      "Back wall (next to pegboard)": "Breaker 13",
+      "Side wall with window (below ladder)": "Breaker 13"
+    },
+    "lights": {
+      "Ceiling lights": "Breaker 13",
+      "Stairs": "Breaker 6",
+      "Outside next to door": "Breaker 13"
+    },
+    "appliances": {
+      "Garage doors": "Breaker 13"
+    }
+  },
+  "Exterior/Misc": {
+    "outlets": {},
+    "lights": {
+      "Outside patio light next to door": "Breaker 12"
+    },
+    "appliances": {
+      "AC - Outside compressor": "Breaker 30 & 32",
+      "AC - Air handler in attic": "Breaker 34 & 36",
+      "Doorbell": "Breaker 40",
+      "Boiler (heat & domestic hot water)": "Breaker 20"
+    }
+  },
+  "Unknowns": {
+    "outlets": {
+      "Outlet next to door going outside to patio": "Unknown",
+      "Outlet inside coat closet": "Unknown",
+      "Outlet to right of refrigerator (router & coffee)": "Unknown",
+      "Outlet in garage for sprinkler/fridge": "Unknown"
+    },
+    "lights": {
+      "Light inside mechanical room": "Unknown",
+      "Outside motion light off corner of living room": "Unknown"
+    },
+    "appliances": {
+      "Landing full bath vent fan": "Unknown"
+    }
+  }
+}

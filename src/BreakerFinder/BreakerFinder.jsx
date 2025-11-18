@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
-import homeData from "../data/homeData.json";
+// import homeData from "../data/placeholderData.json";
+
+import homeData from "../data/breakerData.json";
 
 const BreakerFinder = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
