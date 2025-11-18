@@ -1,102 +1,12 @@
 import React, { useState } from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
-// QR Code component using QR Server API
-const QRCode = ({ url, size = 200 }) => {
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(url)}`;
-  return (
-    <div className="flex flex-col items-center">
-      <img
-        src={qrUrl}
-        alt="QR Code"
-        className="border-4 border-gray-200 rounded-lg"
-        onError={(e) => {
-          console.error("QR Code failed to load");
-          e.target.style.display = "none";
-        }}
-      />
-    </div>
-  );
-};
+import homeData from "../data/homeData.json";
 
 const BreakerFinder = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
-
-  // Sample data structure - customize this with your actual home layout
-  const homeData = {
-    "Living Room": {
-      outlets: {
-        "North Wall Outlet": "Breaker 5",
-        "South Wall Outlet": "Breaker 5",
-        "TV Outlet": "Breaker 12",
-      },
-      lights: {
-        "Ceiling Light": "Breaker 3",
-        "Floor Lamp Outlet": "Breaker 5",
-      },
-      appliances: {
-        TV: "Breaker 12",
-        "Entertainment Center": "Breaker 12",
-      },
-    },
-    Kitchen: {
-      outlets: {
-        "Counter Outlet 1": "Breaker 8",
-        "Counter Outlet 2": "Breaker 9",
-        "Island Outlet": "Breaker 10",
-      },
-      lights: {
-        "Ceiling Lights": "Breaker 4",
-        "Under Cabinet Lights": "Breaker 4",
-      },
-      appliances: {
-        Refrigerator: "Breaker 15",
-        Dishwasher: "Breaker 16",
-        Microwave: "Breaker 11",
-        "Garbage Disposal": "Breaker 17",
-      },
-    },
-    "Master Bedroom": {
-      outlets: {
-        "Left Nightstand": "Breaker 6",
-        "Right Nightstand": "Breaker 6",
-        "Dresser Outlet": "Breaker 6",
-      },
-      lights: {
-        "Ceiling Fan Light": "Breaker 2",
-        "Closet Light": "Breaker 2",
-      },
-      appliances: {
-        "Ceiling Fan": "Breaker 2",
-      },
-    },
-    Bathroom: {
-      outlets: {
-        "Vanity Outlet": "Breaker 7 (GFCI)",
-      },
-      lights: {
-        "Vanity Lights": "Breaker 1",
-        "Shower Light": "Breaker 1",
-      },
-      appliances: {
-        "Exhaust Fan": "Breaker 1",
-      },
-    },
-    Garage: {
-      outlets: {
-        "Workbench Outlet": "Breaker 13",
-        "Door Outlet": "Breaker 13",
-      },
-      lights: {
-        "Overhead Lights": "Breaker 14",
-      },
-      appliances: {
-        "Garage Door Opener": "Breaker 14",
-      },
-    },
-  };
 
   const rooms = Object.keys(homeData);
   const types = selectedRoom ? Object.keys(homeData[selectedRoom]) : [];
