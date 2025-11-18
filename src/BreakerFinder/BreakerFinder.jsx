@@ -20,7 +20,6 @@ const QRCode = ({ url, size = 200 }) => {
 };
 
 const BreakerFinder = () => {
-  const [showQR, setShowQR] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
@@ -104,8 +103,6 @@ const BreakerFinder = () => {
   const items = selectedRoom && selectedType ? Object.keys(homeData[selectedRoom][selectedType]) : [];
   const breakerInfo = selectedRoom && selectedType && selectedItem ? homeData[selectedRoom][selectedType][selectedItem] : null;
 
-  const currentUrl = window.location.href;
-
   const getTypeIcon = (type) => {
     switch (type) {
       case "outlets":
@@ -133,18 +130,6 @@ const BreakerFinder = () => {
             <Home className="w-8 h-8 text-indigo-600 mr-3" />
             <h1 className="text-2xl font-bold text-gray-800">Find That Breaker</h1>
           </div>
-
-          <button onClick={() => setShowQR(!showQR)} className="w-full mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
-            {showQR ? "Hide QR Code" : "Show QR Code"}
-          </button>
-
-          {showQR && (
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600 text-center mb-3">Scan to access this tool</p>
-              <QRCode url={currentUrl} size={200} />
-              <p className="text-xs text-gray-500 text-center mt-3">Save or print this QR code for quick access</p>
-            </div>
-          )}
 
           <div className="space-y-4">
             <div>
