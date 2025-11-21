@@ -3,6 +3,7 @@ import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
 import homeData from "../data/breakerData.json";
 import { useBreakerSelection } from "./useBreakerSelection";
+import SelectField from "../SelectField/SelectField";
 
 const BreakerFinder = () => {
   const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
@@ -68,75 +69,22 @@ const BreakerFinder = () => {
           </div>
 
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Area</label>
-              <select
-                value={selectedFloor}
-                onChange={(e) => handleFloorChange(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              >
-                <option value="">choose an area...</option>
-                {floors.map((floor) => (
-                  <option key={floor} value={floor}>
-                    {floor}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectField label="Select Area" value={selectedFloor} onChange={handleFloorChange} options={floors} placeholder="choose an area..." />
 
-            {selectedFloor && floorHasRooms && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
-                <select
-                  value={selectedRoom}
-                  onChange={(e) => handleRoomChange(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose a room...</option>
-                  {rooms.map((room) => (
-                    <option key={room} value={room}>
-                      {room}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {selectedFloor && floorHasRooms && <SelectField label="Select Room" value={selectedRoom} onChange={handleRoomChange} options={rooms} placeholder="Choose a room..." />}
 
             {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Type</label>
-                <select
-                  value={selectedType}
-                  onChange={(e) => handleTypeChange(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose type...</option>
-                  {types.map((type) => (
-                    <option key={type} value={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <SelectField
+                label="Select Type"
+                value={selectedType}
+                onChange={handleTypeChange}
+                options={types}
+                placeholder="Choose type..."
+                formatOption={(option) => option.charAt(0).toUpperCase() + option.slice(1)}
+              />
             )}
 
-            {selectedType && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Item</label>
-                <select
-                  value={selectedItem}
-                  onChange={(e) => handleItemChange(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose item...</option>
-                  {items.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {selectedType && <SelectField label="Select Item" value={selectedItem} onChange={handleItemChange} options={items} placeholder="Choose item..." />}
           </div>
 
           {breakerInfo && (
