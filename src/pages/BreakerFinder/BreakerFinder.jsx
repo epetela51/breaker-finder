@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
-import homeData from "../data/breakerData.json";
+import homeData from "../../data/breakerData.json";
+import { useBreakerSelection } from "./useBreakerSelection";
+
+import SelectField from "../../components/SelectField/SelectField";
+import UnknownAccordion from "../../components/UnknownAccordian/UnknownAccordian";
 
 const BreakerFinder = () => {
-  const [selectedFloor, setSelectedFloor] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
+  const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
 
   const KNOWN_TYPES = ["outlets", "lights", "appliances"];
 
@@ -20,7 +21,7 @@ const BreakerFinder = () => {
     return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
   };
 
-  const floors = Object.keys(homeData);
+  const floors = Object.keys(homeData).filter((floor) => floor !== "Unknowns");
   const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
   const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
 
@@ -60,13 +61,6 @@ const BreakerFinder = () => {
     }
   };
 
-  const resetSelections = () => {
-    setSelectedFloor("");
-    setSelectedRoom("");
-    setSelectedType("");
-    setSelectedItem("");
-  };
-
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-md mx-auto">
@@ -77,87 +71,22 @@ const BreakerFinder = () => {
           </div>
 
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Area</label>
-              <select
-                value={selectedFloor}
-                onChange={(e) => {
-                  setSelectedFloor(e.target.value);
-                  setSelectedRoom("");
-                  setSelectedType("");
-                  setSelectedItem("");
-                }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              >
-                <option value="">choose an area...</option>
-                {floors.map((floor) => (
-                  <option key={floor} value={floor}>
-                    {floor}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectField label="Select Area" value={selectedFloor} onChange={handleFloorChange} options={floors} placeholder="choose an area..." />
 
-            {selectedFloor && floorHasRooms && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
-                <select
-                  value={selectedRoom}
-                  onChange={(e) => {
-                    setSelectedRoom(e.target.value);
-                    setSelectedType("");
-                    setSelectedItem("");
-                  }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose a room...</option>
-                  {rooms.map((room) => (
-                    <option key={room} value={room}>
-                      {room}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {selectedFloor && floorHasRooms && <SelectField label="Select Room" value={selectedRoom} onChange={handleRoomChange} options={rooms} placeholder="Choose a room..." />}
 
             {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Type</label>
-                <select
-                  value={selectedType}
-                  onChange={(e) => {
-                    setSelectedType(e.target.value);
-                    setSelectedItem("");
-                  }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose type...</option>
-                  {types.map((type) => (
-                    <option key={type} value={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <SelectField
+                label="Select Type"
+                value={selectedType}
+                onChange={handleTypeChange}
+                options={types}
+                placeholder="Choose type..."
+                formatOption={(option) => option.charAt(0).toUpperCase() + option.slice(1)}
+              />
             )}
 
-            {selectedType && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Item</label>
-                <select
-                  value={selectedItem}
-                  onChange={(e) => setSelectedItem(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Choose item...</option>
-                  {items.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {selectedType && <SelectField label="Select Item" value={selectedItem} onChange={handleItemChange} options={items} placeholder="Choose item..." />}
           </div>
 
           {breakerInfo && (
@@ -181,6 +110,8 @@ const BreakerFinder = () => {
             </button>
           )}
         </div>
+
+        <UnknownAccordion />
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
           <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
