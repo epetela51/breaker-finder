@@ -1,9 +1,9 @@
 import React from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
-import homeData from "../data/breakerData.json";
+import homeData from "../../data/breakerData.json";
 import { useBreakerSelection } from "./useBreakerSelection";
-import SelectField from "../SelectField/SelectField";
+import SelectField from "../../components/SelectField/SelectField";
 
 const BreakerFinder = () => {
   const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
@@ -119,3 +119,4 @@ const BreakerFinder = () => {
 };
 
 export default BreakerFinder;
+
