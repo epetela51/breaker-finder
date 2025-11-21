@@ -3,7 +3,9 @@ import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
 import homeData from "../../data/breakerData.json";
 import { useBreakerSelection } from "./useBreakerSelection";
+
 import SelectField from "../../components/SelectField/SelectField";
+import UnknownAccordion from "../../components/UnknownAccordian/UnknownAccordian";
 
 const BreakerFinder = () => {
   const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
@@ -19,7 +21,7 @@ const BreakerFinder = () => {
     return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
   };
 
-  const floors = Object.keys(homeData);
+  const floors = Object.keys(homeData).filter((floor) => floor !== "Unknowns");
   const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
   const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
 
@@ -109,6 +111,8 @@ const BreakerFinder = () => {
           )}
         </div>
 
+        <UnknownAccordion />
+
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
           <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
           <p>Always turn off the main breaker before working on electrical systems or face the consequences.</p>
@@ -119,4 +123,3 @@ const BreakerFinder = () => {
 };
 
 export default BreakerFinder;
-
