@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
 
 import homeData from "../data/breakerData.json";
+import { useBreakerSelection } from "./useBreakerSelection";
 
 const BreakerFinder = () => {
-  const [selectedFloor, setSelectedFloor] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
+  const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
 
   const KNOWN_TYPES = ["outlets", "lights", "appliances"];
 
@@ -60,13 +58,6 @@ const BreakerFinder = () => {
     }
   };
 
-  const resetSelections = () => {
-    setSelectedFloor("");
-    setSelectedRoom("");
-    setSelectedType("");
-    setSelectedItem("");
-  };
-
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-md mx-auto">
@@ -81,12 +72,7 @@ const BreakerFinder = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Select Area</label>
               <select
                 value={selectedFloor}
-                onChange={(e) => {
-                  setSelectedFloor(e.target.value);
-                  setSelectedRoom("");
-                  setSelectedType("");
-                  setSelectedItem("");
-                }}
+                onChange={(e) => handleFloorChange(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
                 <option value="">choose an area...</option>
@@ -103,11 +89,7 @@ const BreakerFinder = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Room</label>
                 <select
                   value={selectedRoom}
-                  onChange={(e) => {
-                    setSelectedRoom(e.target.value);
-                    setSelectedType("");
-                    setSelectedItem("");
-                  }}
+                  onChange={(e) => handleRoomChange(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
                   <option value="">Choose a room...</option>
@@ -125,10 +107,7 @@ const BreakerFinder = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Type</label>
                 <select
                   value={selectedType}
-                  onChange={(e) => {
-                    setSelectedType(e.target.value);
-                    setSelectedItem("");
-                  }}
+                  onChange={(e) => handleTypeChange(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
                   <option value="">Choose type...</option>
@@ -146,7 +125,7 @@ const BreakerFinder = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Item</label>
                 <select
                   value={selectedItem}
-                  onChange={(e) => setSelectedItem(e.target.value)}
+                  onChange={(e) => handleItemChange(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
                   <option value="">Choose item...</option>
