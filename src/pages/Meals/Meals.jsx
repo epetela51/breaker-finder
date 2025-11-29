@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
 import Button from "../../components/Button/Button";
+import { useMealPlan } from "./hooks/useMealPlan";
+import { useMealsLibrary } from "./hooks/useMealsLibrary";
 
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -22,148 +23,27 @@ const INITIAL_MEALS = [
 ];
 
 const Meals = () => {
-  const [meals, setMeals] = useState(INITIAL_MEALS);
-  const [mealPlan, setMealPlan] = useState(() =>
-    DAYS_OF_WEEK.reduce(
-      (acc, day, index) => ({
-        ...acc,
-        [day]: INITIAL_MEALS[index % INITIAL_MEALS.length].id,
-      }),
-      {}
-    )
-  );
-  const [newMealForm, setNewMealForm] = useState({ name: "", note: "" });
-  const [newMealError, setNewMealError] = useState("");
-  const [selectedMealId, setSelectedMealId] = useState("");
-  const [manageMealForm, setManageMealForm] = useState({ name: "", note: "" });
-  const [manageError, setManageError] = useState("");
-
-  const mealSelectOptions = useMemo(
-    () =>
-      meals.map((meal) => (
-        <option key={meal.id} value={meal.id}>
-          {meal.name}
-        </option>
-      )),
-    [meals]
-  );
-
-  const handlePlanChange = (day, mealId) => {
-    setMealPlan((prev) => ({
-      ...prev,
-      [day]: mealId,
-    }));
-  };
-
-  const handleResetWeek = () => {
-    setMealPlan(
-      DAYS_OF_WEEK.reduce(
-        (acc, day) => ({
-          ...acc,
-          [day]: "",
-        }),
-        {}
-      )
-    );
-  };
-
-  const resetNewMealForm = () => {
-    setNewMealForm({ name: "", note: "" });
-    setNewMealError("");
-  };
-
-  const resetManageForm = () => {
-    setSelectedMealId("");
-    setManageMealForm({ name: "", note: "" });
-    setManageError("");
-  };
-
-  const selectMealForManagement = (mealId) => {
-    setSelectedMealId(mealId);
-    setManageError("");
-
-    if (!mealId) {
-      setManageMealForm({ name: "", note: "" });
-      return;
-    }
-
-    const meal = meals.find((item) => item.id === mealId);
-    if (meal) {
-      setManageMealForm({ name: meal.name, note: meal.note ?? "" });
-      return;
-    }
-
-    // Meal no longer exists; clear form to avoid stale data
-    setManageMealForm({ name: "", note: "" });
-  };
-
-  const handleAddMealSubmit = (event) => {
-    event.preventDefault();
-    const trimmedName = newMealForm.name.trim();
-
-    if (!trimmedName) {
-      setNewMealError("Meal name is required.");
-      return;
-    }
-
-    const newMeal = {
-      id: `meal-${Date.now()}`,
-      name: trimmedName,
-      note: newMealForm.note.trim(),
-    };
-
-    setMeals((prev) => [...prev, newMeal]);
-    resetNewMealForm();
-  };
-
-  const handleUpdateMeal = (event) => {
-    event.preventDefault();
-
-    if (!selectedMealId) {
-      setManageError("Select a meal first.");
-      return;
-    }
-
-    const trimmedName = manageMealForm.name.trim();
-    if (!trimmedName) {
-      setManageError("Meal name is required.");
-      return;
-    }
-
-    setMeals((prev) =>
-      prev.map((meal) =>
-        meal.id === selectedMealId
-          ? {
-              ...meal,
-              name: trimmedName,
-              note: manageMealForm.note.trim(),
-            }
-          : meal
-      )
-    );
-    setManageError("");
-    resetManageForm();
-  };
-
-  const handleDeleteSelectedMeal = () => {
-    if (!selectedMealId) {
-      setManageError("Select a meal first.");
-      return;
-    }
-
-    setMeals((prev) => prev.filter((meal) => meal.id !== selectedMealId));
-    setMealPlan((prev) =>
-      Object.keys(prev).reduce(
-        (acc, day) => ({
-          ...acc,
-          [day]: prev[day] === selectedMealId ? "" : prev[day],
-        }),
-        {}
-      )
-    );
-
-    resetManageForm();
-  };
+  const { mealPlan, handlePlanChange, handleResetWeek, unlinkMealFromPlan } = useMealPlan({
+    initialMeals: INITIAL_MEALS,
+    daysOfWeek: DAYS_OF_WEEK,
+  });
+  const {
+    meals,
+    mealOptions,
+    newMealForm,
+    newMealError,
+    setNewMealForm,
+    selectedMealId,
+    manageMealForm,
+    manageError,
+    setManageMealForm,
+    handleAddMealSubmit,
+    handleUpdateMeal,
+    handleDeleteSelectedMeal,
+    selectMealForManagement,
+    resetNewMealForm,
+    resetManageForm,
+  } = useMealsLibrary({ initialMeals: INITIAL_MEALS, onMealDelete: unlinkMealFromPlan });
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">
@@ -195,7 +75,11 @@ const Meals = () => {
                   className="w-full border border-slate-300 rounded px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="">Select dinner</option>
-                  {mealSelectOptions}
+                  {mealOptions.map((option) => (
+                    <option key={`${day}-${option.id}`} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
                 </select>
                 {currentMeal?.note && <p className="mt-3 text-sm text-slate-600">{currentMeal.note}</p>}
               </div>
@@ -258,7 +142,11 @@ const Meals = () => {
                 disabled={meals.length === 0}
               >
                 <option value="">{meals.length === 0 ? "No meals available" : "Choose a meal to edit"}</option>
-                {mealSelectOptions}
+                {mealOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
               </select>
             </div>
 
