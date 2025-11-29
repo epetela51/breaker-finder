@@ -1,10 +1,10 @@
 import React from "react";
 import { Home, Zap, Power, Lightbulb } from "lucide-react";
-import { Link } from "react-router";
 
 import homeData from "../../data/breakerData.json";
 import { useBreakerSelection } from "./useBreakerSelection";
 
+import Button from "../../components/Button/Button";
 import SelectField from "../../components/SelectField/SelectField";
 import UnknownAccordion from "../../components/UnknownAccordian/UnknownAccordian";
 
@@ -64,9 +64,7 @@ const BreakerFinder = () => {
 
   return (
     <div className="min-h-screen p-4">
-      <Link to="/" className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition-colors">
-        Go Home
-      </Link>
+      <Button url="/" text="Go Home" />
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-6 mb-4">
           <div className="flex items-center justify-center mb-6">
