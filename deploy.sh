@@ -15,7 +15,7 @@ fi
 PI_USER="ericpetela"
 PI_HOST="192.168.4.195"
 TEMP_DIR="/tmp/react-app"
-WEB_DIR="/var/www/breaker-finder"
+WEB_DIR="/var/www/home-app"
 
 echo "Copying files to Raspberry Pi..."
 scp -r dist/* ${PI_USER}@${PI_HOST}:${TEMP_DIR}

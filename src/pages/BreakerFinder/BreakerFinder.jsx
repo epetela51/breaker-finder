@@ -4,6 +4,7 @@ import { Home, Zap, Power, Lightbulb } from "lucide-react";
 import homeData from "../../data/breakerData.json";
 import { useBreakerSelection } from "./useBreakerSelection";
 
+import Button from "../../components/Button/Button";
 import SelectField from "../../components/SelectField/SelectField";
 import UnknownAccordion from "../../components/UnknownAccordian/UnknownAccordian";
 
@@ -63,6 +64,7 @@ const BreakerFinder = () => {
 
   return (
     <div className="min-h-screen p-4">
+      <Button url="/" text="Go Home" />
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-6 mb-4">
           <div className="flex items-center justify-center mb-6">
