@@ -27,8 +27,8 @@ export const useMealPlan = ({ initialMeals = [], daysOfWeek = [] }) => {
   }, []);
 
   const handleResetWeek = useCallback(() => {
-    setMealPlan(buildInitialMealPlan(daysOfWeek, initialMeals));
-  }, [daysOfWeek, initialMeals]);
+    setMealPlan(buildInitialMealPlan(daysOfWeek));
+  }, [daysOfWeek]);
 
   const unlinkMealFromPlan = useCallback((mealId) => {
     if (!mealId) return;
@@ -46,4 +46,3 @@ export const useMealPlan = ({ initialMeals = [], daysOfWeek = [] }) => {
 
   return { mealPlan, handlePlanChange, handleResetWeek, unlinkMealFromPlan };
 };
-
