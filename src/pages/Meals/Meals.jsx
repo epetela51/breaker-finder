@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Button from "../../components/Button/Button";
 import { useMealPlan } from "./hooks/useMealPlan";
 import { useMealsLibrary } from "./hooks/useMealsLibrary";
@@ -44,6 +46,16 @@ const Meals = () => {
     resetNewMealForm,
     resetManageForm,
   } = useMealsLibrary({ initialMeals: INITIAL_MEALS, onMealDelete: unlinkMealFromPlan });
+
+  useEffect(() => {
+    fetch("/api/meals")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Meals from Flask:", data);
+        // Set your state here
+      })
+      .catch((err) => console.error("Error fetching meals:", err));
+  }, []);
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">
