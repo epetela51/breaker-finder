@@ -1,0 +1,11 @@
+/**
+ * Pads the bottom of the meal list by the iOS safe area inset height,
+ * preventing content from being clipped by the Safari toolbar or home indicator.
+ */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.meal-picker-sheet {
+  height: calc(90dvh - env(safe-area-inset-bottom));
+}
