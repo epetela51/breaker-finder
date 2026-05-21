@@ -5,6 +5,8 @@ import CloseButton from '../../../../../components/CloseButton/CloseButton';
 import MealList from '../MealList/MealList';
 import MealAddModal from '../../../shared/MealAddModal/MealAddModal';
 
+import './MealPickerSheet.css';
+
 /**
  * MealPickerSheet - Bottom sheet component for selecting meals.
  * Presentational component (UI only, logic is in parent/hooks).
@@ -48,10 +50,9 @@ const MealPickerSheet = ({
 
       {/* Bottom sheet */}
       <div
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`meal-picker-sheet fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
-        style={{ height: '90vh', top: '10vh' }}
       >
         {/* Header */}
         <div className="flex items-center justify-between gap-3 px-4 py-4 border-b border-gray-200 flex-shrink-0">
@@ -85,7 +86,7 @@ const MealPickerSheet = ({
         )}
 
         {/* Meal List */}
-        <div className="overflow-y-auto flex-1">
+        <div className="overflow-y-auto flex-1 overscroll-contain pb-safe">
           <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} />
         </div>
 

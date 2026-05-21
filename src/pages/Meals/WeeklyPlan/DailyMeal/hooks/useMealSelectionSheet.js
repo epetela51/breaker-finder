@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Custom hook to manage meal selection sheet and add meal modal visibility.
@@ -13,6 +13,24 @@ import { useState, useCallback } from 'react';
 export const useMealSelectionSheet = (onMealAdded) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAddMealModalOpen, setIsAddMealModalOpen] = useState(false);
+
+  /**
+   * Locks the page body when the sheet is open to prevent background scrolling.
+   * Uses position:fixed instead of overflow:hidden, which iOS Safari ignores on body.
+   */
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
 
   const openSheet = () => setIsOpen(true);
   const closeSheet = () => setIsOpen(false);
