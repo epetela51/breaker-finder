@@ -14,7 +14,6 @@ import { formatDateToString } from '../../../../utils/dateUtils';
  *   - selectedDateString: currently selected date (YYYY-MM-DD or null)
  *   - weekDates: date objects for the current week
  *   - successMessage: success message to display (or null)
- *   - handlePreviousWeek: navigate to previous week
  *   - handleNextWeek: navigate to next week
  *   - handleSelectDate: select a date
  *   - handleSubmit: submit and assign meal
@@ -40,11 +39,6 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
       return () => clearTimeout(timer);
     }
   }, [successMessage, onClose]);
-
-  const handlePreviousWeek = useCallback(() => {
-    setWeekOffset((prev) => Math.max(prev - 1, -1));
-    setSelectedDateString(null);
-  }, []);
 
   const handleNextWeek = useCallback(() => {
     setWeekOffset((prev) => Math.min(prev + 1, 1));
@@ -82,7 +76,6 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
     selectedDateString,
     weekDates,
     successMessage,
-    handlePreviousWeek,
     handleNextWeek,
     handleSelectDate,
     handleSubmit,

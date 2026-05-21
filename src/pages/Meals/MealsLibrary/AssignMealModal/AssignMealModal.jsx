@@ -27,7 +27,6 @@ const AssignMealModal = ({ isOpen, mealId, mealName, onClose, onAssign, weeklyPl
     selectedDateString,
     weekDates,
     successMessage,
-    handlePreviousWeek,
     handleNextWeek,
     handleSelectDate,
     handleSubmit,
@@ -43,7 +42,6 @@ const AssignMealModal = ({ isOpen, mealId, mealName, onClose, onAssign, weeklyPl
         <WeekNavigationSection
           weekOffset={weekOffset}
           weekDates={weekDates}
-          onPreviousWeek={handlePreviousWeek}
           onNextWeek={handleNextWeek}
           successMessage={successMessage}
         />
