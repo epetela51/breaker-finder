@@ -10,7 +10,7 @@ const EditButton = ({ meal, onEdit }) => {
     <button
       onClick={handleClick}
       aria-label={`Edit ${meal.meal}`}
-      className="ml-3 flex-shrink-0 p-2 rounded touch-manipulation"
+      className="flex-shrink-0 p-2 rounded touch-manipulation"
       style={{ lineHeight: 0 }}
     >
       <svg
