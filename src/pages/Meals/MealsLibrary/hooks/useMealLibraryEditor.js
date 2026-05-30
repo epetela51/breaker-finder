@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { sortMealsAlphabetically } from '../../utils/mealSortUtils';
 
 /**
  * Custom hook for managing the meal library editor state and actions.
@@ -55,8 +56,10 @@ export const useMealLibraryEditor = (meals, setMeals, performDelete) => {
   const handleMealUpdated = useCallback(
     (updatedMeal) => {
       setMeals((prevMeals) =>
-        prevMeals.map((m) =>
-          m.id === updatedMeal.id ? { ...m, meal: updatedMeal.meal, note: updatedMeal.note } : m
+        sortMealsAlphabetically(
+          prevMeals.map((m) =>
+            m.id === updatedMeal.id ? { ...m, meal: updatedMeal.meal, note: updatedMeal.note } : m
+          )
         )
       );
       setExpandedMealId(null);

@@ -44,11 +44,7 @@ const MealsLibrary = () => {
 
   useMealLibraryStateSync(isFormOpen, expandedMealId, handleToggleMeal);
 
-  const displayedMeals = useMemo(() => {
-    return filteredMeals(meals)
-      .slice()
-      .sort((a, b) => a.meal.localeCompare(b.meal, undefined, { sensitivity: 'base' }));
-  }, [meals, filteredMeals]);
+  const displayedMeals = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   if (isLoading) {
     return (
