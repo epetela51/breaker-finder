@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getApiBaseUrl } from '@/config/apiConfig';
+import { sortMealsAlphabetically } from '../utils/mealSortUtils';
 
 /**
  * Custom hook to fetch meals data from the API.
@@ -18,7 +19,7 @@ export const useFetchMeals = () => {
         const apiBaseUrl = getApiBaseUrl();
         const res = await fetch(`${apiBaseUrl}/v2/meals`);
         const data = await res.json();
-        setMeals(data.meals);
+        setMeals(sortMealsAlphabetically(data.meals));
         setWeeklyPlan(data.weeklyPlan);
       } catch (err) {
         console.error('Error fetching meals:', err);
