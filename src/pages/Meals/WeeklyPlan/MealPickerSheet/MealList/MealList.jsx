@@ -9,12 +9,22 @@ import MealListItem from '../MealListItem/MealListItem';
  * @param {Function} onSelectMeal - Callback when a meal is selected (optional)
  * @param {string} emptyMessage - Custom message when no meals are found (optional)
  */
-const MealList = ({ meals, onSelectMeal = () => {}, emptyMessage = 'No meals found' }) => {
+const MealList = ({
+  meals,
+  onSelectMeal = () => {},
+  onEditMeal = () => {},
+  emptyMessage = 'No meals found',
+}) => {
   if (meals.length > 0) {
     return (
       <div>
         {meals.map((meal) => (
-          <MealListItem key={meal.id} meal={meal} onClick={() => onSelectMeal(meal.id)} />
+          <MealListItem
+            key={meal.id}
+            meal={meal}
+            onClick={() => onSelectMeal(meal.id)}
+            onEdit={() => onEditMeal(meal)}
+          />
         ))}
       </div>
     );

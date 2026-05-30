@@ -26,6 +26,7 @@ const MealEditModal = ({ isOpen, meal, onClose, onMealUpdated }) => {
   return (
     <Modal isOpen={isOpen} onBackdropClick={handleCancel}>
       <MealForm
+        key={meal.id}
         initialTitle={meal.meal}
         initialNote={meal.note || ''}
         title="Edit Meal"

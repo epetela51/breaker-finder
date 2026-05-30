@@ -4,6 +4,7 @@ import TextInput from '../../../../../components/TextInput/TextInput';
 import CloseButton from '../../../../../components/CloseButton/CloseButton';
 import MealList from '../MealList/MealList';
 import MealAddModal from '../../../shared/MealAddModal/MealAddModal';
+import MealEditModal from '../../../MealsLibrary/MealEditModal/MealEditModal';
 
 import './MealPickerSheet.css';
 
@@ -23,6 +24,11 @@ import './MealPickerSheet.css';
  * @param {Function} onOpenAddMealModal - Callback to open the add meal modal
  * @param {Function} onCloseAddMealModal - Callback to close the add meal modal
  * @param {Function} handleMealAdded - Callback when a meal is successfully added
+ * @param {Function} onEditMeal - Callback when a meal item should open edit mode
+ * @param {boolean} isEditMealModalOpen - Whether the edit meal modal is open
+ * @param {Object} selectedMealForEdit - Meal object selected for editing
+ * @param {Function} onCloseEditMealModal - Callback to close the edit modal
+ * @param {Function} onMealUpdated - Callback when a meal was updated
  */
 const MealPickerSheet = ({
   isOpen,
@@ -37,15 +43,22 @@ const MealPickerSheet = ({
   onOpenAddMealModal,
   onCloseAddMealModal,
   handleMealAdded,
+  onEditMeal,
+  isEditMealModalOpen,
+  selectedMealForEdit,
+  onCloseEditMealModal,
+  onMealUpdated,
 }) => {
   if (!isOpen) return null;
+
+  const isAnyModalOpen = isAddMealModalOpen || isEditMealModalOpen;
 
   return (
     <>
       {/* Backdrop overlay */}
       <div
         onClick={onClose}
-        className={`fixed inset-0 z-40 transition-opacity ${isAddMealModalOpen ? 'bg-black/70' : 'bg-black/50'}`}
+        className={`fixed inset-0 z-40 transition-opacity ${isAnyModalOpen ? 'bg-black/70' : 'bg-black/50'}`}
       />
 
       {/* Bottom sheet */}
@@ -87,11 +100,11 @@ const MealPickerSheet = ({
 
         {/* Meal List */}
         <div className="overflow-y-auto flex-1 overscroll-contain pb-safe">
-          <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} />
+          <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} onEditMeal={onEditMeal} />
         </div>
 
-        {/* Dark overlay when add meal modal is open */}
-        {isAddMealModalOpen && (
+        {/* Dark overlay when either add or edit modal is open */}
+        {isAnyModalOpen && (
           <div className="absolute inset-0 z-40 bg-black/50 rounded-t-2xl pointer-events-none" />
         )}
       </div>
@@ -101,6 +114,14 @@ const MealPickerSheet = ({
         isOpen={isAddMealModalOpen}
         onClose={onCloseAddMealModal}
         onMealAdded={handleMealAdded}
+      />
+
+      {/* Edit Meal Modal */}
+      <MealEditModal
+        isOpen={isEditMealModalOpen}
+        meal={selectedMealForEdit}
+        onClose={onCloseEditMealModal}
+        onMealUpdated={onMealUpdated}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMealSelectionSheet } from './useMealSelectionSheet';
 import { useMealSearch } from '../../../hooks/useMealSearch';
 import { useSaveMealSelection } from '../../../hooks/useSaveMealSelection';
@@ -15,7 +15,14 @@ import { useDailyMealHandlers } from './useDailyMealHandlers';
  * @param {Function} onMealAdded - Callback when a new meal is added
  * @returns {Object} All state and handlers needed by DailyMeal component
  */
-export const useDailyMeal = (dateString, mealId, meals, onMealSelected, onMealAdded) => {
+export const useDailyMeal = (
+  dateString,
+  mealId,
+  meals,
+  onMealSelected,
+  onMealAdded,
+  onMealUpdated
+) => {
   const {
     isOpen,
     openSheet,
@@ -25,6 +32,26 @@ export const useDailyMeal = (dateString, mealId, meals, onMealSelected, onMealAd
     closeAddMealModal,
     handleMealAdded,
   } = useMealSelectionSheet(onMealAdded);
+
+  const [isEditMealModalOpen, setIsEditMealModalOpen] = useState(false);
+  const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
+
+  const openEditMealModal = (meal) => {
+    setSelectedMealForEdit(meal);
+    setIsEditMealModalOpen(true);
+  };
+
+  const closeEditMealModal = () => {
+    setSelectedMealForEdit(null);
+    setIsEditMealModalOpen(false);
+  };
+
+  const handleMealUpdated = (updatedMeal) => {
+    if (onMealUpdated) {
+      onMealUpdated(updatedMeal);
+    }
+    closeEditMealModal();
+  };
 
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const saveMeal = useSaveMealSelection(onMealSelected);
@@ -59,5 +86,11 @@ export const useDailyMeal = (dateString, mealId, meals, onMealSelected, onMealAd
     openAddMealModal,
     closeAddMealModal,
     handleMealAdded,
+    // Edit meal modal state and handlers
+    isEditMealModalOpen,
+    selectedMealForEdit,
+    openEditMealModal,
+    closeEditMealModal,
+    handleMealUpdated,
   };
 };
