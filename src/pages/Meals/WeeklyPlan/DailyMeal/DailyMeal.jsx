@@ -10,7 +10,7 @@ import NoteModal from './NoteModal/NoteModal';
 import DateBox from '../DateBox/DateBox';
 import MealDisplay from '../MealDisplay/MealDisplay';
 
-const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) => {
+const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded, onMealUpdated }) => {
   const { isOpen: noteModalOpen, noteContent, openNote, closeNote } = useNoteModal();
 
   const {
@@ -27,7 +27,12 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
     openAddMealModal,
     closeAddMealModal,
     handleMealAdded,
-  } = useDailyMeal(dateString, mealId, meals, onMealSelected, onMealAdded);
+    isEditMealModalOpen,
+    selectedMealForEdit,
+    openEditMealModal,
+    closeEditMealModal,
+    handleMealUpdated,
+  } = useDailyMeal(dateString, mealId, meals, onMealSelected, onMealAdded, onMealUpdated);
 
   // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
   const date = parseLocalDate(dateString);
@@ -75,6 +80,11 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
         onOpenAddMealModal={openAddMealModal}
         onCloseAddMealModal={closeAddMealModal}
         handleMealAdded={handleMealAdded}
+        onEditMeal={openEditMealModal}
+        isEditMealModalOpen={isEditMealModalOpen}
+        selectedMealForEdit={selectedMealForEdit}
+        onCloseEditMealModal={closeEditMealModal}
+        onMealUpdated={handleMealUpdated}
       />
 
       <NoteModal isOpen={noteModalOpen} noteContent={noteContent} onClose={closeNote} />

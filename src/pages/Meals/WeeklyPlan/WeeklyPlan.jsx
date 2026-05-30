@@ -25,6 +25,14 @@ const Meals = () => {
     setMeals((prev) => sortMealsAlphabetically([...prev, newMeal]));
   };
 
+  const handleMealUpdate = (updatedMeal) => {
+    setMeals((prevMeals) =>
+      sortMealsAlphabetically(
+        prevMeals.map((meal) => (meal.id === updatedMeal.id ? updatedMeal : meal))
+      )
+    );
+  };
+
   // Get dates for the selected week
   const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
@@ -70,6 +78,7 @@ const Meals = () => {
                       meals={meals}
                       onMealSelected={handlePlanChange}
                       onMealAdded={handleMealAdded}
+                      onMealUpdated={handleMealUpdate}
                     />
                   );
                 })}
