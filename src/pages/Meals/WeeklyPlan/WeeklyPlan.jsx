@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useMealPlan } from './hooks/useMealPlan';
 import { useWeekReset } from './hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
+import { sortMealsAlphabetically } from '../utils/mealSortUtils';
 import { getWeekDates } from '../../../utils/getWeekDates';
 import { formatDateToString } from '../../../utils/dateUtils';
 import { DAYS_OF_WEEK } from '../constants';
@@ -21,7 +22,15 @@ const Meals = () => {
   });
 
   const handleMealAdded = (newMeal) => {
-    setMeals((prev) => [...prev, newMeal]);
+    setMeals((prev) => sortMealsAlphabetically([...prev, newMeal]));
+  };
+
+  const handleMealUpdate = (updatedMeal) => {
+    setMeals((prevMeals) =>
+      sortMealsAlphabetically(
+        prevMeals.map((meal) => (meal.id === updatedMeal.id ? updatedMeal : meal))
+      )
+    );
   };
 
   // Get dates for the selected week
@@ -69,6 +78,7 @@ const Meals = () => {
                       meals={meals}
                       onMealSelected={handlePlanChange}
                       onMealAdded={handleMealAdded}
+                      onMealUpdated={handleMealUpdate}
                     />
                   );
                 })}

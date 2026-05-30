@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { sortMealsAlphabetically } from '../../utils/mealSortUtils';
 
 /**
  * Custom hook for managing the dynamic add meal form in MealsLibrary.
@@ -15,7 +16,7 @@ export const useMealsLibraryForm = (setMeals) => {
   };
 
   const handleMealAdded = (newMeal) => {
-    setMeals((prevMeals) => [...prevMeals, newMeal]);
+    setMeals((prevMeals) => sortMealsAlphabetically([...prevMeals, newMeal]));
     setIsFormOpen(false);
   };
 

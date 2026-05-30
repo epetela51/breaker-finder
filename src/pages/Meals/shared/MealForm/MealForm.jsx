@@ -48,6 +48,12 @@ const MealForm = ({
 
         <div className="flex gap-3 mt-6">
           <button
+            onClick={handleReset}
+            className="flex-1 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          >
+            Reset
+          </button>
+          <button
             onClick={handleSubmit}
             className={`flex-1 px-4 py-2 text-white rounded transition ${
               isSubmitSuccess
@@ -57,12 +63,7 @@ const MealForm = ({
           >
             {submitButtonLabel}
           </button>
-          <button
-            onClick={handleReset}
-            className="flex-1 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-          >
-            Reset
-          </button>
+
           {showCancelButton && (
             <button
               onClick={handleCancel}
